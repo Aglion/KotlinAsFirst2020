@@ -72,10 +72,10 @@ fun ageDescription(age: Int): String {
     if (age % 100 in 11..19) {
         return "$age лет"
     }
-    return when {
-        age == 1 -> "$age год"
-        age in 2..4 -> "$age года"
-        age in 5..9 -> "$age лет"
+    return when (age) {
+        1 -> "$age год"
+        in 2..4 -> "$age года"
+        in 5..9 -> "$age лет"
         else -> "wrong number"
     }
 
@@ -107,7 +107,14 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int = TODO()
+): Int {
+    return when {
+        (kingX == rookX1 && kingY == rookY1) -> 1
+        (kingX == rookX2 && kingY == rookY2) -> 2
+        else -> return 0
+    }
+}
+
 
 /**
  * Простая (2 балла)

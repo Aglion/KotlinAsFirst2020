@@ -14,6 +14,14 @@ class Tests {
         assertFalse(pointInsideCircle(2.0, 2.0, 0.0, 0.0, 2.0))
     }
 
+    private fun assertFalse(pointInsideCircle: Unit) {
+
+    }
+
+    private fun assertTrue(pointInsideCircle: Unit) {
+        TODO("Not yet implemented")
+    }
+
     @Test
     @Tag("2")
     fun isNumberHappy() {
