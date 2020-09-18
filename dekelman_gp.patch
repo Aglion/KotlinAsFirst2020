@@ -1,0 +1,62 @@
+Index: src/lesson1/task1/Simple.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/lesson1/task1/Simple.kt	(revision 649d97929bfc2b3466a331201041ccb4521a8645)
++++ src/lesson1/task1/Simple.kt	(date 1599991557865)
+@@ -98,7 +98,7 @@
+  * Пользователь задает целое число, большее 100 (например, 3801).
+  * Определить третью цифру справа в этом числе (в данном случае 8).
+  */
+-fun thirdDigit(number: Int): Int = TODO()
++fun thirdDigit(number: Int): Int = (number % 1000) / 100
+ 
+ /**
+  * Простая (2 балла)
+Index: src/lesson2/task1/IfElse.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/lesson2/task1/IfElse.kt	(revision 649d97929bfc2b3466a331201041ccb4521a8645)
++++ src/lesson2/task1/IfElse.kt	(date 1600009060172)
+@@ -68,7 +68,18 @@
+  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
+  * вернуть строку вида: «21 год», «32 года», «12 лет».
+  */
+-fun ageDescription(age: Int): String = TODO()
++fun ageDescription(age: Int): String {
++    if (age % 100 in 11..19) {
++        return "$age лет"
++    }
++    return when {
++        age == 1 -> "$age год"
++        age in 2..4 -> "$age года"
++        age in 5..9 -> "$age лет"
++        else -> "wrong number"
++    }
++
++}
+ 
+ /**
+  * Простая (2 балла)
+Index: src/lesson2/task2/Logical.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/lesson2/task2/Logical.kt	(revision 649d97929bfc2b3466a331201041ccb4521a8645)
++++ src/lesson2/task2/Logical.kt	(date 1600009314125)
+@@ -9,9 +9,10 @@
+  *
+  * Лежит ли точка (x, y) внутри окружности с центром в (x0, y0) и радиусом r?
+  */
+-fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
++fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) {
+     sqr(x - x0) + sqr(y - y0) <= sqr(r)
+ 
++}
+ /**
+  * Простая (2 балла)
+  *
