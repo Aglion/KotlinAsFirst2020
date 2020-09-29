@@ -1,4 +1,4 @@
-@file:Suppress("UNUSED_PARAMETER")
+    @file:Suppress("UNUSED_PARAMETER")
 
 package lesson3.task1
 
@@ -72,7 +72,16 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var m = 0
+    var k = n
+    if (n == 0) return 1
+    while (k > 0) {
+        k /= 10
+        m++
+    }
+    return m
+}
 
 /**
  * Простая (2 балла)
@@ -81,7 +90,6 @@ fun digitNumber(n: Int): Int = TODO()
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int = TODO()
-
 /**
  * Простая (2 балла)
  *
