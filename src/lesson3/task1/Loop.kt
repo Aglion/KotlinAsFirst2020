@@ -72,7 +72,16 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var m = 0
+    var k = n
+    if (n == 0) return 1
+    while (k != 0) {
+        k /= 10
+        m++
+    }
+    return m
+}
 
 /**
  * Простая (2 балла)
@@ -120,7 +129,19 @@ fun collatzSteps(x: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    var x = m
+    var y = n
+    val k: Int
+    val z: Int
+    while (x * y != 0) {
+        if (x > y) x %= y
+        else y %= x
+    }
+    k = x + y // одно из чисел = 0, другое = НОД
+    z = m * n / k
+    return z
+}
 
 /**
  * Средняя (3 балла)
@@ -158,7 +179,15 @@ fun revert(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean {
+    var m = 0
+    var k = n
+    while (k > 0) {
+        m = m * 10 + k % 10 // переворачиваем число
+        k /= 10
+    }
+    return n == m
+}
 
 /**
  * Средняя (3 балла)
