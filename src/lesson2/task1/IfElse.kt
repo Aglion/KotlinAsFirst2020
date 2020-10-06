@@ -106,9 +106,9 @@ fun whichRookThreatens(
     rookX2: Int, rookY2: Int
 ): Int {
     return when {
-        (kingX == rookX1 && kingY == rookY1) -> 1
-        (kingX == rookX2 && kingY == rookY2) -> 2
-        (kingX == rookX1 && kingY == rookY1) && (kingX == rookX2 && kingY == rookY2) -> 3
+        ((kingX == rookX1) || (kingY == rookY1)) && ((kingX != rookX2) && (kingY != rookY2)) -> 1
+        ((kingX == rookX2) || (kingY == rookY2)) && ((kingX != rookX1) && (kingY != rookY1)) -> 2
+        ((kingX == rookX1) || (kingY == rookY1)) && ((kingX == rookX2) || (kingY == rookY2)) -> 3
         else -> return 0
     }
 }
