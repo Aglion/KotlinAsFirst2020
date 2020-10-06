@@ -138,9 +138,9 @@ fun lcm(m: Int, n: Int): Int {
         if (x > y) x %= y
         else y %= x
     }
-    k = x + y // одно из чисел = 0, другое = НОД
-    z = m * n / k
-    return z
+    z = x + y
+    k = m * n / z
+    return k
 }
 
 /**
@@ -180,15 +180,14 @@ fun revert(n: Int): Int = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun isPalindrome(n: Int): Boolean {
-    var m = 0
-    var k = n
-    while (k > 0) {
-        m = m * 10 + k % 10 // переворачиваем число
-        k /= 10
+    var x = n
+    var y = 0
+    while (x > 0) {
+        y = y * 10 + x % 10
+        x /= 10
     }
-    return n == m
+    return y == n
 }
-
 /**
  * Средняя (3 балла)
  *
