@@ -105,14 +105,13 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int {
-    return when {
+): Int =
+    when {
         ((kingX == rookX1) || (kingY == rookY1)) && ((kingX != rookX2) && (kingY != rookY2)) -> 1
         ((kingX == rookX2) || (kingY == rookY2)) && ((kingX != rookX1) && (kingY != rookY1)) -> 2
         ((kingX == rookX1) || (kingY == rookY1)) && ((kingX == rookX2) || (kingY == rookY2)) -> 3
         else -> 0
     }
-}
 
 
 /**
@@ -140,6 +139,7 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+
 /**
  * Средняя (3 балла)
  *

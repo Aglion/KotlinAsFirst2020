@@ -188,12 +188,7 @@ fun revert(n: Int): Int {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun isPalindrome(n: Int): Boolean {
-    var x = n
-    var y = 0
-    while (x > 0) {
-        y = y * 10 + x % 10
-        x /= 10
-    }
+    val y = revert(n)
     return y == n
 }
 /**
