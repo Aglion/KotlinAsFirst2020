@@ -128,23 +128,24 @@ fun abs(v: List<Double>): Double = TODO()
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
 fun mean(list: List<Double>): Double {
-    var x = 0.0
-    if (list.isNotEmpty()) {
-        var y = 0.0
-        for (i in list.indices) {
-            y += list[i]
-        }
-        x = y / list.size
-    }
-    return x
-}
-//    var x: Int
-//    var y = 0.0
+//    var x = 0.0
 //    if (list.isNotEmpty()) {
-//        x = (list.lastIndexOf(list.size) + 1)
-//        y = (list.sum() / x)
+//        var y = 0.0
+//        for (i in list.indices) {
+//            y += list[i]
+//        }
+//        x = y / list.size
 //    }
-//    return y
+//    return x
+//}
+    val x: Int
+    var y = 0.0
+    if (list.isNotEmpty()) {
+        x = (list.lastIndex + 1)
+        y = (list.sum() / x)
+    }
+    return y
+}
 /**
  * Средняя (3 балла)
  *
@@ -276,52 +277,66 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 fun roman(n: Int): String {
+    var a = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
+    var b = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
+    var i = 12
     var m = n
-    var r = ""
+    var text = ""
     while (m != 0) {
-        when {
-            m >= 1000 -> {
-                r += "M"; m -= 1000
-            }
-            m >= 900 -> {
-                r += "CM"; m -= 900
-            }
-            m >= 500 -> {
-                r += "D"; m -= 500
-            }
-            m >= 400 -> {
-                r += "CD"; m -= 400
-            }
-            m >= 100 -> {
-                r += "C"; m -= 100
-            }
-            m >= 90 -> {
-                r += "XC"; m -= 90
-            }
-            m >= 50 -> {
-                r += "L"; m -= 50
-            }
-            m >= 40 -> {
-                r += "XL"; m -= 40
-            }
-            m >= 10 -> {
-                r += "X"; m -= 10
-            }
-            m >= 9 -> {
-                r += "IX"; m -= 9
-            }
-            m >= 5 -> {
-                r += "V"; m -= 5
-            }
-            m >= 4 -> {
-                r += "IV"; m -= 4
-            }
-            m >= 1 -> {
-                r += "I"; m -= 1
-            }
+        while (m >= a[i]) {
+            m -= a[i]
+            text += b[i]
         }
-    }
-    return r
+        i--
+}
+return text
+
+//    var m = n
+//    var r = ""
+//    while (m != 0) {
+//        when {
+//            m >= 1000 -> {
+//                r += "M"; m -= 1000
+//            }
+//            m >= 900 -> {
+//                r += "CM"; m -= 900
+//            }
+//            m >= 500 -> {
+//                r += "D"; m -= 500
+//            }
+//            m >= 400 -> {
+//                r += "CD"; m -= 400
+//            }
+//            m >= 100 -> {
+//                r += "C"; m -= 100
+//            }
+//            m >= 90 -> {
+//                r += "XC"; m -= 90
+//            }
+//            m >= 50 -> {
+//                r += "L"; m -= 50
+//            }
+//            m >= 40 -> {
+//                r += "XL"; m -= 40
+//            }
+//            m >= 10 -> {
+//                r += "X"; m -= 10
+//            }
+//            m >= 9 -> {
+//                r += "IX"; m -= 9
+//            }
+//            m >= 5 -> {
+//                r += "V"; m -= 5
+//            }
+//            m >= 4 -> {
+//                r += "IV"; m -= 4
+//            }
+//            m >= 1 -> {
+//                r += "I"; m -= 1
+//            }
+//        }
+//    }
+//    return r
 }
 
 /**
