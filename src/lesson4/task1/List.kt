@@ -280,8 +280,8 @@ fun roman(n: Int): String {
     val a = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
     val b = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
     var i = 12
-    var text = ""
     var m = n
+    var text = ""
     while (m != 0) {
         while (m >= a[i]) {
             m -= a[i]
