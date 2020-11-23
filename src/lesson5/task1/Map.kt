@@ -2,8 +2,6 @@
 
 package lesson5.task1
 
-import java.lang.System.console
-
 
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
