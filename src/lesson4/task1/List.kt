@@ -141,8 +141,8 @@ fun mean(list: List<Double>): Double {
     val x: Int
     var y = 0.0
     if (list.isNotEmpty()) {
-        x = (list.lastIndex + 1)
-        y = (list.sum() / x)
+//        x = list.lastIndex + 1
+        y = list.sum() / list.size
     }
     return y
 }
@@ -277,11 +277,11 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 fun roman(n: Int): String {
-    var a = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
-    var b = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
+    val a = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
+    val b = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
     var i = 12
-    var m = n
     var text = ""
+    var m = n
     while (m != 0) {
         while (m >= a[i]) {
             m -= a[i]
@@ -347,14 +347,13 @@ return text
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String {
-    var m = n
     var a = 0 // сотни тысяч
     var b = 0 // десятки тысяч
     var c = 0 // тысячи
     var d = 0 // сотни
     var e = 0 // десятки
     var f = 0 // единицы
-    var thousand = arrayOf(
+    val thousand = arrayOf(
         "",
         "одна тысяча",
         "две тысячи",
@@ -376,7 +375,7 @@ fun russian(n: Int): String {
         "восемнадцать тысяч",
         "девятнадцать тысяч"
     )
-    var x = arrayOf(
+    val x = arrayOf(
         "",
         "один",
         "два",
@@ -398,7 +397,7 @@ fun russian(n: Int): String {
         "восемнадцать",
         "девятнадцать"
     ) // 0..19
-    var y = arrayOf(
+    val y = arrayOf(
         "",
         "",
         "двадцать",
@@ -410,7 +409,7 @@ fun russian(n: Int): String {
         "восемьдесят",
         "девяносто"
     ) // 20..90 (+тыс)
-    var z = arrayOf(
+    val z = arrayOf(
         "",
         "сто",
         "двести",
@@ -419,37 +418,37 @@ fun russian(n: Int): String {
         "пятьсот",
         "шестьсот",
         "семсот",
-        "восемсот",
+        "восемьсот",
         "девятьсот"
     ) // 100..900 (+тыс)
     var text = ""
-    a = m / 100000
+    a = n / 100000
     text += when {
-        m / 1000 == 0 -> {
+        n / 1000 == 0 -> {
             ""
         }
         a != 0 -> z[a] + " "
         else -> ""
     }
-    b = m / 1000 % 100
+    b = n / 1000 % 100
     text += if (b < 20 && b != 0)
         thousand[b]
     else y[b / 10]
     if (b > 20) {
-        c = m / 1000 % 10
-        text += if (m % 1000 > 0) {
+        c = n / 1000 % 10
+        text += if (n % 1000 > 0) {
             " " + thousand[c]
         } else thousand[c]
     }
-    if (m / 1000 > 0 && b == 0 && c == 0) text += "тысяч"
-    if (m / 1000 != 0 && m % 1000 != 0) text += " "
-    d = m % 1000 / 100
+    if (n / 1000 > 0 && b == 0 && c == 0) text += "тысяч"
+    if (n / 1000 != 0 && n % 1000 != 0) text += " "
+    d = n % 1000 / 100
     if (d != 0) text += z[d] + " "
-    e = m % 100
+    e = n % 100
     text += if (e < 20)
         x[e]
     else y[e / 10]
-    f = m % 10
+    f = n % 10
     if (e > 20 && f != 0) text += " " + x[f]
     return text
 }
