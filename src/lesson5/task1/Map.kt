@@ -127,9 +127,8 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
  *   subtractOf(a = mutableMapOf("a" to "z"), mapOf("a" to "z"))
  *     -> a changes to mutableMapOf() aka becomes empty
  */
-fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
-    TODO()
-}
+fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) = TODO()
+
 
 /**
  * Простая (2 балла)
