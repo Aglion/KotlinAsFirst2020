@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+import kotlin.math.max
+
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
@@ -283,7 +285,7 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
         s = list[x] + list[y]
         when {
             s == number -> {
-                return (list.indexOf(x + 1) to list.indexOf(y + 1))
+                return (list.indexOf(x) + 1 to list.indexOf(y) + 1)
             }
             s < number -> x++
             else -> y--
@@ -313,4 +315,33 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+    val result = mutableSetOf<String>()
+    val m = mutableListOf<Int>() // список масс
+    val p = mutableListOf<Int>() // список цен
+    val t = mutableListOf<String>() // список сокровищ
+    val prices = Array(treasures.size + 1) { Array(capacity + 1) { 0 } }
+    for ((key, value) in treasures) {
+        m.add(value.first)
+        p.add(value.second)
+        t.add(key)
+    }
+    for (i in 1..treasures.size) {
+        for (j in 0..capacity) {
+            if (j >= m[i - 1]) {
+                prices[i][j] = max(prices[i - 1][j], prices[i - 1][j - m[i - 1]] + p[i - 1])
+            } else
+                prices[i][j] = prices[i - 1][j]
+        }
+    }
+    var x = capacity
+    var y = treasures.size
+    while (y > 0) {
+        if (prices[y][x] != prices[y - 1][x]) {
+            result.add(t[y - 1])
+            x -= m[y - 1]
+        }
+        y--
+    }
+    return result
+}

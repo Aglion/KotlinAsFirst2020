@@ -128,20 +128,9 @@ fun abs(v: List<Double>): Double = TODO()
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
 fun mean(list: List<Double>): Double {
-//    var x = 0.0
-//    if (list.isNotEmpty()) {
-//        var y = 0.0
-//        for (i in list.indices) {
-//            y += list[i]
-//        }
-//        x = y / list.size
-//    }
-//    return x
-//}
     val x: Int
     var y = 0.0
     if (list.isNotEmpty()) {
-//        x = list.lastIndex + 1
         y = list.sum() / list.size
     }
     return y
@@ -288,55 +277,8 @@ fun roman(n: Int): String {
             text += b[i]
         }
         i--
-}
-return text
-
-//    var m = n
-//    var r = ""
-//    while (m != 0) {
-//        when {
-//            m >= 1000 -> {
-//                r += "M"; m -= 1000
-//            }
-//            m >= 900 -> {
-//                r += "CM"; m -= 900
-//            }
-//            m >= 500 -> {
-//                r += "D"; m -= 500
-//            }
-//            m >= 400 -> {
-//                r += "CD"; m -= 400
-//            }
-//            m >= 100 -> {
-//                r += "C"; m -= 100
-//            }
-//            m >= 90 -> {
-//                r += "XC"; m -= 90
-//            }
-//            m >= 50 -> {
-//                r += "L"; m -= 50
-//            }
-//            m >= 40 -> {
-//                r += "XL"; m -= 40
-//            }
-//            m >= 10 -> {
-//                r += "X"; m -= 10
-//            }
-//            m >= 9 -> {
-//                r += "IX"; m -= 9
-//            }
-//            m >= 5 -> {
-//                r += "V"; m -= 5
-//            }
-//            m >= 4 -> {
-//                r += "IV"; m -= 4
-//            }
-//            m >= 1 -> {
-//                r += "I"; m -= 1
-//            }
-//        }
-//    }
-//    return r
+    }
+    return text
 }
 
 /**
@@ -417,7 +359,7 @@ fun russian(n: Int): String {
         "четыреста",
         "пятьсот",
         "шестьсот",
-        "семсот",
+        "семьсот",
         "восемьсот",
         "девятьсот"
     ) // 100..900 (+тыс)
@@ -452,14 +394,3 @@ fun russian(n: Int): String {
     if (e > 20 && f != 0) text += " " + x[f]
     return text
 }
-//    if (m in 20..99) {
-//        e = m / 10 //десятки
-//        f = m % 10 //еденицы
-//        text = y[e - 1]
-//        if (f != 0)
-//            text += " " + x[f]
-//        return text
-//    } else if (m in 100..999) {
-//        d = m / 100 //сотни
-//
-//    }
