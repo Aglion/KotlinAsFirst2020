@@ -191,6 +191,7 @@ fun isPalindrome(n: Int): Boolean {
     val y = revert(n)
     return y == n
 }
+
 /**
  * Средняя (3 балла)
  *

@@ -128,13 +128,13 @@ fun abs(v: List<Double>): Double = TODO()
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
 fun mean(list: List<Double>): Double {
-    val x: Int
     var y = 0.0
     if (list.isNotEmpty()) {
         y = list.sum() / list.size
     }
     return y
 }
+
 /**
  * Средняя (3 балла)
  *
@@ -289,12 +289,7 @@ fun roman(n: Int): String {
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String {
-    var a = 0 // сотни тысяч
-    var b = 0 // десятки тысяч
     var c = 0 // тысячи
-    var d = 0 // сотни
-    var e = 0 // десятки
-    var f = 0 // единицы
     val thousand = arrayOf(
         "",
         "одна тысяча",
@@ -364,7 +359,7 @@ fun russian(n: Int): String {
         "девятьсот"
     ) // 100..900 (+тыс)
     var text = ""
-    a = n / 100000
+    val a: Int = n / 100000 // сотни тысяч
     text += when {
         n / 1000 == 0 -> {
             ""
@@ -372,7 +367,7 @@ fun russian(n: Int): String {
         a != 0 -> z[a] + " "
         else -> ""
     }
-    b = n / 1000 % 100
+    val b: Int = n / 1000 % 100 // десятки тысяч
     text += if (b < 20 && b != 0)
         thousand[b]
     else y[b / 10]
@@ -384,13 +379,13 @@ fun russian(n: Int): String {
     }
     if (n / 1000 > 0 && b == 0 && c == 0) text += "тысяч"
     if (n / 1000 != 0 && n % 1000 != 0) text += " "
-    d = n % 1000 / 100
+    val d: Int = n % 1000 / 100 // сотни
     if (d != 0) text += z[d] + " "
-    e = n % 100
+    val e: Int = n % 100 // десятки
     text += if (e < 20)
         x[e]
     else y[e / 10]
-    f = n % 10
+    val f: Int = n % 10 // единицы
     if (e > 20 && f != 0) text += " " + x[f]
     return text
 }

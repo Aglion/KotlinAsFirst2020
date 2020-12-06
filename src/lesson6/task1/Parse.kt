@@ -74,7 +74,35 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val parts = str.split(" ").toMutableList()
+    var result = ""
+    val map = mapOf(
+        "января" to "01",
+        "февраля" to "02",
+        "марта" to "03",
+        "апреля" to "04",
+        "мая" to "05",
+        "июня" to "06",
+        "июля" to "07",
+        "августа" to "08",
+        "сентября" to "09",
+        "октября" to "10",
+        "ноября" to "11",
+        "декабря" to "12"
+    )
+    val list30 = listOf("апреля", "июня", "сентября", "ноября")
+    val list31 = listOf("января", "марта", "мая", "июля", "августа", "октября", "декабря")
+    if (parts.size < 2) return ""
+    if (parts[1] in list30 && parts[0].toInt() < 30 || parts[1] in list31 && parts[0].toInt() < 31) {
+        if (parts[0].toInt() / 10 == 0) parts[0] = "0" + parts[0]
+        result += when {
+            map[parts[1]] == null -> ""
+            else -> parts[0] + "." + map[parts[1]] + "." + parts[2]
+        }
+    } else return ""
+    return result
+}
 
 /**
  * Средняя (4 балла)
