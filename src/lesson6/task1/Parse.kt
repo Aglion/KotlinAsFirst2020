@@ -94,13 +94,20 @@ fun dateStrToDigit(str: String): String {
     val list30 = listOf("апреля", "июня", "сентября", "ноября")
     val list31 = listOf("января", "марта", "мая", "июля", "августа", "октября", "декабря")
     if (parts.size < 2) return ""
-    if (parts[1] in list30 && parts[0].toInt() < 30 || parts[1] in list31 && parts[0].toInt() < 31) {
-        if (parts[0].toInt() / 10 == 0) parts[0] = "0" + parts[0]
-        result += when {
-            map[parts[1]] == null -> ""
-            else -> parts[0] + "." + map[parts[1]] + "." + parts[2]
+    if (parts[1] == "февраля") {
+        return when {
+            parts[2].toInt() % 4 == 0 && parts[0].toInt() < 30 -> parts[0] + "." + "02" + "." + parts[2]
+            parts[2].toInt() % 4 != 0 && parts[0].toInt() < 29 -> parts[0] + "." + "02" + "." + parts[2]
+            else -> ""
         }
-    } else return ""
+    } else
+        if (parts[1] in list30 && parts[0].toInt() < 31 || parts[1] in list31 && parts[0].toInt() < 32) {
+            if (parts[0].toInt() / 10 == 0) parts[0] = "0" + parts[0]
+            result += when {
+                map[parts[1]] == null -> ""
+                else -> parts[0] + "." + map[parts[1]] + "." + parts[2]
+            }
+        } else return ""
     return result
 }
 
@@ -114,7 +121,45 @@ fun dateStrToDigit(str: String): String {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val parts = digital.split(".").toMutableList()
+    var result = ""
+    val map = mapOf(
+        "01" to "января",
+        "02" to "февраля",
+        "03" to "марта",
+        "04" to "апреля",
+        "05" to "мая",
+        "06" to "июня",
+        "07" to "июля",
+        "08" to "августа",
+        "09" to "сентября",
+        "10" to "октября",
+        "11" to "ноября",
+        "12" to "декабря"
+    )
+    val days30 = listOf("04", "06", "09", "11")
+    val days31 = listOf("01", "03", "05", "07", "08", "10", "12")
+    if (parts.size < 2) return ""
+    if (parts.size > 3) return ""
+    if (parts[1] == "02") {
+        return when {
+            parts[2].toInt() % 4 == 0 && parts[0].toInt() < 30 -> parts[0] + " " + "февраля" + " " + parts[2]
+            parts[2].toInt() % 4 != 0 && parts[0].toInt() < 29 -> parts[0] + " " + "февраля" + " " + parts[2]
+            else -> ""
+        }
+    } else
+        if (parts[1] in days30 && parts[0].toInt() < 31 || parts[1] in days31 && parts[0].toInt() < 32) {
+            if (parts[0].toInt() / 10 == 0) parts[0] = (parts[0].toInt() % 10).toString()
+            result += when {
+                map[parts[1]] == null -> ""
+                else -> parts[0] + " " + map[parts[1]] + " " + parts[2]
+            }
+        } else return ""
+    return result
+
+
+}
 
 /**
  * Средняя (4 балла)
