@@ -371,7 +371,7 @@ fun russian(n: Int): String {
     text += if (b < 20 && b != 0)
         thousand[b]
     else y[b / 10]
-    if (b > 20) {
+    if (b > 19) {
         c = n / 1000 % 10
         text += if (n % 1000 > 0) {
             " " + thousand[c]
