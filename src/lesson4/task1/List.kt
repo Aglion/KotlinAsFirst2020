@@ -382,7 +382,8 @@ fun russian(n: Int): String {
     if (n / 1000 > 0 && b == 0 && c == 0) text += "тысяч"
     if (n / 1000 > 0 && n % 1000 != 0) text += " "
     val d: Int = n % 1000 / 100 // сотни
-    if (d != 0) text += z[d] + " "
+    if (d != 0 && n % 100 == 0) text += z[d]
+    else if(d != 0) text += z[d] + " "
     val e: Int = n % 100 // десятки
     text += if (e < 20)
         x[e]
