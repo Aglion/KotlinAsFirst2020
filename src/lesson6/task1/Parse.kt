@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -91,25 +93,15 @@ fun dateStrToDigit(str: String): String {
         "ноября" to "11",
         "декабря" to "12"
     )
-    if (parts[0].length > 2 && parts[0].isEmpty()) return ""
-    val list30 = listOf("апреля", "июня", "сентября", "ноября")
-    val list31 = listOf("января", "марта", "мая", "июля", "августа", "октября", "декабря")
     if (parts.size < 2) return ""
-    if (parts[1] == "февраля") {
-        return when {
-            parts[2].toInt() % 4 == 0 && parts[0].toInt() < 30 -> parts[0] + "." + "02" + "." + parts[2]
-            parts[2].toInt() % 4 != 0 && parts[0].toInt() < 29 -> parts[0] + "." + "02" + "." + parts[2]
-            else -> ""
-        }
-    } else
-        if (parts[1] in list30 && parts[0].toInt() < 31 || parts[1] in list31 && parts[0].toInt() < 32) {
-            if (parts[0].toInt() / 10 == 0) parts[0] = parts[0]
-            if (parts[0].toInt() / 10 == 0 && parts[0].length == 1) parts[0] = "0" + parts[0]
-            result += when {
-                map[parts[1]] == null -> ""
-                else -> parts[0] + "." + map[parts[1]] + "." + parts[2]
-            }
-        } else return ""
+    if (parts.size > 3) return ""
+    val x = map[parts[1]]?.toInt()?.let { daysInMonth(it, parts[2].toInt()) }
+    if (parts[0].length > 2 && parts[0].isEmpty()) return ""
+    if (map[parts[1]] == null) return ""
+    if (parts[0].toInt() / 10 == 0) parts[0] = parts[0]
+    if (parts[0].toInt() / 10 == 0 && parts[0].length == 1) parts[0] = "0" + parts[0]
+    if (parts[0].toInt() > x!! || parts[0].toInt() == 0) return ""
+    else result += parts[0] + "." + map[parts[1]] + "." + parts[2]
     return result
 }
 
@@ -126,6 +118,7 @@ fun dateStrToDigit(str: String): String {
 fun dateDigitToStr(digital: String): String {
     val parts = digital.split(".").toMutableList()
     var result = ""
+
     val map = mapOf(
         "01" to "января",
         "02" to "февраля",
@@ -140,29 +133,15 @@ fun dateDigitToStr(digital: String): String {
         "11" to "ноября",
         "12" to "декабря"
     )
-    val days30 = listOf("04", "06", "09", "11")
-    val days31 = listOf("01", "03", "05", "07", "08", "10", "12")
     if (parts.size < 2) return ""
     if (parts.size > 3) return ""
-    if (parts[1] == "02") {
-        return when {
-            parts[2].toInt() % 4 == 0 && parts[0].toInt() in 10..29 -> parts[0] + " " + "февраля" + " " + parts[2]
-            parts[2].toInt() % 4 != 0 && parts[0].toInt() in 10..28 -> parts[0] + " " + "февраля" + " " + parts[2]
-            parts[2].toInt() % 4 == 0 && parts[0].toInt() in 1..9 -> (parts[0].toInt() % 10).toString() + " " + "февраля" + " " + parts[2]
-            parts[2].toInt() % 4 != 0 && parts[0].toInt() in 1..9 -> (parts[0].toInt() % 10).toString() + " " + "февраля" + " " + parts[2]
-            else -> ""
-        }
-    } else
-        if (parts[1] in days30 && parts[0].toInt() < 31 || parts[1] in days31 && parts[0].toInt() < 32) {
-            if (parts[0].toInt() / 10 == 0) parts[0] = (parts[0].toInt() % 10).toString()
-            result += when {
-                map[parts[1]] == null -> ""
-                else -> parts[0] + " " + map[parts[1]] + " " + parts[2]
-            }
-        } else return ""
+    if (parts[2].length > 5) return ""
+    if (map[parts[1]] == null) return ""
+    val x = daysInMonth(parts[1].toInt(), parts[2].toInt())
+    if (parts[0].toInt() / 10 == 0) parts[0] = (parts[0].toInt() % 10).toString()
+    if (parts[0].toInt() > x || parts[0].toInt() == 0) return ""
+    else result += parts[0] + " " + map[parts[1]] + " " + parts[2]
     return result
-
-
 }
 
 /**
