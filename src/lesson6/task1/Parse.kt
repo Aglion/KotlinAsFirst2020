@@ -91,6 +91,7 @@ fun dateStrToDigit(str: String): String {
         "ноября" to "11",
         "декабря" to "12"
     )
+    if (parts[0].length > 2 && parts[0].isEmpty()) return ""
     val list30 = listOf("апреля", "июня", "сентября", "ноября")
     val list31 = listOf("января", "марта", "мая", "июля", "августа", "октября", "декабря")
     if (parts.size < 2) return ""
@@ -102,7 +103,8 @@ fun dateStrToDigit(str: String): String {
         }
     } else
         if (parts[1] in list30 && parts[0].toInt() < 31 || parts[1] in list31 && parts[0].toInt() < 32) {
-            if (parts[0].toInt() / 10 == 0) parts[0] = "0" + parts[0]
+            if (parts[0].toInt() / 10 == 0) parts[0] = parts[0]
+            if (parts[0].toInt() / 10 == 0 && parts[0].length == 1) parts[0] = "0" + parts[0]
             result += when {
                 map[parts[1]] == null -> ""
                 else -> parts[0] + "." + map[parts[1]] + "." + parts[2]
@@ -144,8 +146,10 @@ fun dateDigitToStr(digital: String): String {
     if (parts.size > 3) return ""
     if (parts[1] == "02") {
         return when {
-            parts[2].toInt() % 4 == 0 && parts[0].toInt() < 30 -> parts[0] + " " + "февраля" + " " + parts[2]
-            parts[2].toInt() % 4 != 0 && parts[0].toInt() < 29 -> parts[0] + " " + "февраля" + " " + parts[2]
+            parts[2].toInt() % 4 == 0 && parts[0].toInt() in 10..29 -> parts[0] + " " + "февраля" + " " + parts[2]
+            parts[2].toInt() % 4 != 0 && parts[0].toInt() in 10..28 -> parts[0] + " " + "февраля" + " " + parts[2]
+            parts[2].toInt() % 4 == 0 && parts[0].toInt() in 1..9 -> (parts[0].toInt() % 10).toString() + " " + "февраля" + " " + parts[2]
+            parts[2].toInt() % 4 != 0 && parts[0].toInt() in 1..9 -> (parts[0].toInt() % 10).toString() + " " + "февраля" + " " + parts[2]
             else -> ""
         }
     } else
