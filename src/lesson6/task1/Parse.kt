@@ -118,7 +118,6 @@ fun dateStrToDigit(str: String): String {
 fun dateDigitToStr(digital: String): String {
     val parts = digital.split(".").toMutableList()
     var result = ""
-
     val map = mapOf(
         "01" to "января",
         "02" to "февраля",
@@ -135,7 +134,6 @@ fun dateDigitToStr(digital: String): String {
     )
     if (parts.size < 2) return ""
     if (parts.size > 3) return ""
-    if (parts[2].length > 5) return ""
     if (map[parts[1]] == null) return ""
     val x = daysInMonth(parts[1].toInt(), parts[2].toInt())
     if (parts[0].toInt() / 10 == 0) parts[0] = (parts[0].toInt() % 10).toString()
