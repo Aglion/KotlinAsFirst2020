@@ -2,7 +2,9 @@
 
 package lesson5.task1
 
+import kotlinx.html.A
 import kotlin.math.max
+
 
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
@@ -278,23 +280,31 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
-    val z = list.sorted()
-    var x = 0
-    var s: Int
-    var y = z.size - 1
-    while (x < y) {
-        s = z[x] + z[y]
-        when {
-            s == number -> {
-                return (z[x] - 1 to z[y] - 1)
-            }
-            s < number -> x++
-            else -> y--
-        }
+    val map = mutableMapOf<Int, Int>()
+    for (i in list.indices) {
+        val a = number - list[i]
+        if (a !in map) map[list[i]] = i
+        else return (list.indexOf(a) to i)
     }
-    return (-1 to -1)
+return (-1 to -1)
 }
-// через HasMap()?
+//    val z = list.sorted()
+//    var y = list.size - 1
+//    var x = 0
+//    var s: Int
+
+//    while (x < y) {
+//        s = z[x] + z[y]
+//        when {
+//            s == number -> {
+//                return (z[x] - 1 to z[y] - 1)
+//            }
+//            s < number -> x++
+//            else -> y--
+//        }
+//    }
+//    return (-1 to -1)
+
 
 /**
  * Очень сложная (8 баллов)
