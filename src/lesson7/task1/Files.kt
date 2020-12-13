@@ -64,7 +64,7 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  */
 fun deleteMarked(inputName: String, outputName: String) {
     val w = File(outputName).bufferedWriter()
-    File(inputName). forEachLine { line ->
+    File(inputName).forEachLine { line ->
         if (line.isEmpty()) {
             w.newLine()
         } else
@@ -86,13 +86,15 @@ fun deleteMarked(inputName: String, outputName: String) {
  *
  */
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
+    var k = 0
     val map = mutableMapOf<String, Int>()
     for (i in substrings) {
-        var k = 0
-        File(inputName).readText().toLowerCase().windowed(i.length) {
-            if (i.toLowerCase() == it)
-                k++
-        }
+        File(inputName)
+            .readText()
+            .toLowerCase()
+            .windowed(i.length) {
+                if (i.toLowerCase() == it) k++
+            }
         map[i] = k
     }
     return map
@@ -445,24 +447,24 @@ fun markdownToHtml(inputName: String, outputName: String) {
  * Вывести в выходной файл процесс умножения столбиком числа lhv (> 0) на число rhv (> 0).
  *
  * Пример (для lhv == 19935, rhv == 111):
-    19935
- *    111
+     19935
+  *    111
  --------
     19935
  + 19935
  +19935
  --------
-  2212785
- * Используемые пробелы, отступы и дефисы должны в точности соответствовать примеру.
- * Нули в множителе обрабатывать так же, как и остальные цифры:
+ 2212785
+  * Используемые пробелы, отступы и дефисы должны в точности соответствовать примеру.
+  * Нули в множителе обрабатывать так же, как и остальные цифры:
     235
   *  10
- -----
-     0
- +235
- -----
-  2350
- *
+  -----
+      0
+  +235
+  -----
+   2350
+  *
  */
 fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
     TODO()
@@ -478,72 +480,103 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
    19935 | 22
   -198     906
   ----
-    13
-    -0
-    --
-    135
-   -132
-   ----
-      3
+     13
+     -0
+     --
+     135
+    -132
+    ----
+       3
 
  * Используемые пробелы, отступы и дефисы должны в точности соответствовать примеру.
  *
  */
-fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
-    val writer = File(outputName).bufferedWriter()
-    val answer = lhv / rhv
-    val numbers = lhv.toString().split("").filter { it != "" }.toMutableList()
-    var tempNumber = numbers[0].toInt()
-    for ((index) in numbers.withIndex()) {
-        if (tempNumber < rhv && index != lhv.toString().length - 1) {
-            tempNumber = (tempNumber.toString() + numbers[index + 1]).toInt()
-        }
+fun rank(num: Int): Int {
+    var n = num
+    var count = 0
+    if (num == 0)
+        return 1
+    while (n > 0) {
+        n /= 10
+        ++count
     }
-    val firstLength = tempNumber.toString().length
-    val numbersOdd = numbers.drop(firstLength)
-    var tempNumber1 = tempNumber / rhv * rhv
-    if (tempNumber == lhv && tempNumber1 != 0 && tempNumber1.toString().length != lhv.toString().length)
-        writer.write("$lhv | $rhv")
-    else writer.write(" $lhv | $rhv")
-    writer.newLine()
-    writer.write("-$tempNumber1")
-    for (i in 1..answer.toString().length + 2) writer.write(" ")
-    writer.write("$answer")
-    writer.newLine()
-    for (i in 1..tempNumber1.toString().length + 1) writer.write("-")
-    writer.newLine()
-    var ost = tempNumber - tempNumber1
-    var spaces = tempNumber1.toString().length + 1 - ost.toString().length
-    for (i in 1..spaces) writer.write(" ")
-    writer.write("$ost")
+    return count
+}
 
-    if (numbersOdd.isNotEmpty()) {
-        for (number in numbersOdd) {
-            writer.write(number)
-            writer.newLine()
-            tempNumber = (ost.toString() + number).toInt()
-            tempNumber1 = tempNumber / rhv * rhv
-            val prevOst = ost
-            ost = tempNumber - tempNumber1
-            if ((prevOst.toString() + number).length >= (tempNumber1.toString().length + 1))
-                for (i in 1..spaces + (prevOst.toString() + number).length - (tempNumber1.toString().length + 1)) writer.write(
-                    " "
-                )
-            else for (i in 1 until spaces) writer.write(" ")
-            writer.write("-$tempNumber1")
-            writer.newLine()
-            if ((prevOst.toString() + number).length >= (tempNumber1.toString().length + 1)) {
-                for (i in 1..spaces) writer.write(" ")
-                for (i in 1..(prevOst.toString() + number).length) writer.write("-")
-            } else {
-                for (i in 1 until spaces) writer.write(" ")
-                for (i in 1..tempNumber1.toString().length + 1) writer.write("-")
+fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
+    File(outputName).bufferedWriter().use {
+        val number = mutableListOf<Int>()
+        var space = 0
+        var dividend = lhv
+        var line = 0
+        var tempNumber: Int
+        while (dividend > 0) {
+            number.add(dividend % 10)
+            dividend /= 10
+        }
+        number.reverse()
+        dividend = number[0]
+        for (i in 0 until number.size) {
+            if (dividend < rhv && line == 0 && lhv >= rhv) {
+                dividend *= 10
+                dividend += number[i + 1]
+                continue
             }
-            writer.newLine()
-            spaces += (prevOst.toString() + number).length - ost.toString().length
-            for (i in 1..spaces) writer.write(" ")
-            writer.write("$ost")
+            tempNumber = dividend / rhv * rhv
+            if (tempNumber == 0 && line == 0) dividend = lhv
+            if (line == 0) {
+                if (rank(dividend) == rank(tempNumber)) {
+                    ++space
+                    it.write(" ")
+                }
+                it.write("$lhv | $rhv")
+                it.newLine()
+                ++line
+            }
+            if (rank(dividend) > rank(tempNumber)) space += rank(dividend) - rank(tempNumber) - 1
+            if (rank(dividend) == rank(tempNumber)) --space
+            for (j in 1..space) it.write(" ")
+            it.write("-$tempNumber")
+            if (line == 1) {
+                if (rank(dividend) == rank(tempNumber) && tempNumber != 0) {
+                    for (k in 1..rank(lhv) - rank(tempNumber) + 3)
+                        it.write(" ")
+                }
+                if (rank(dividend) > rank(tempNumber) && tempNumber != 0) {
+                    for (k in 1..rank(lhv) - rank(tempNumber) + 2)
+                        it.write(" ")
+                }
+                if (tempNumber == 0) it.write("   ")
+                it.write((lhv / rhv).toString())
+                ++line
+            }
+            it.newLine()
+            if (rank(dividend) > rank(tempNumber)) space -= rank(dividend) - rank(tempNumber) - 1
+            for (j in 1..space) it.write(" ")
+            if (rank(tempNumber) + 1 >= rank(dividend)) {
+                for (j in 0..rank(tempNumber))
+                    it.write("-")
+            } else {
+                for (j in 0 until rank(dividend))
+                    it.write("-")
+            }
+            it.newLine()
+            if (rank(dividend) == rank(tempNumber)) ++space
+            dividend -= tempNumber
+            if (rank(dividend) < rank(tempNumber)) space += rank(tempNumber) - rank(dividend)
+            if (rank(dividend) == rank(tempNumber)) ++space
+            if (rank(dividend) == rank(tempNumber) && rank(tempNumber) == rank(dividend + tempNumber)) --space
+            for (j in 1..space)
+                it.write(" ")
+            it.write("$dividend")
+            if (dividend == lhv) break
+            if (dividend == 0) ++space
+            if (i != number.size - 1) {
+                dividend *= 10
+                dividend += number[i + 1]
+                it.write(number[i + 1].toString())
+            }
+            it.newLine()
         }
     }
-    writer.close()
 }
