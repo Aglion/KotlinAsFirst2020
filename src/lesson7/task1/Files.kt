@@ -502,7 +502,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     val numbers1 = numbers.drop(tempNumber.toString().length)
     var tempNumber1 = tempNumber / rhv * rhv
     if (tempNumber == lhv && tempNumber1 != 0 && tempNumber1.toString().length != lhv.toString().length)
-        writer.write("$lhv | $rhv")
+        writer.write(" $lhv | $rhv")
     else writer.write(" $lhv | $rhv")
     writer.newLine()
     writer.write("-$tempNumber1")
