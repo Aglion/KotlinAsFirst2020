@@ -246,7 +246,10 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    val regex = (1..n).map { it * it }
+    return regex[n - 1]
+}
 
 /**
  * Сложная (5 баллов)
