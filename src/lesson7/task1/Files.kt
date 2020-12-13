@@ -189,24 +189,26 @@ fun alignFileByWidth(inputName: String, outputName: String) {
  *
  */
 fun top20Words(inputName: String): Map<String, Int> {
-    val text = File(inputName).readText().replace(Regex("[^A-Za-zA-Яа-яЁё]"), " ").toLowerCase()
-    val result = mutableMapOf<String, Int>()
-    var counter = 0
-    var pValue = -1
-    val lResult = mutableMapOf<String, Int>()
-    for (word in text.split(' ')) {
-        if (word !in result.keys) result += word to 1
-        else result[word] = result[word]!!.plus(1)
-    }
-    result.remove("")
-    for ((key, value) in result.toList().sortedByDescending { it.second }.toMap()) {
-        if (counter >= 19 && value != pValue) break
-        pValue = value
-        counter++
-        lResult += key to value
-    }
-    return lResult
+    TODO()
 }
+//    val text = File(inputName).readText().replace(Regex("[^A-Za-zA-Яа-яЁё]"), " ").toLowerCase()
+//    val result = mutableMapOf<String, Int>()
+//    var counter = 0
+//    var pValue = -1
+//    val lResult = mutableMapOf<String, Int>()
+//    for (word in text.split(' ')) {
+//        if (word !in result.keys) result += word to 1
+//        else result[word] = result[word]!!.plus(1)
+//    }
+//    result.remove("")
+//    for ((key, value) in result.toList().sortedByDescending { it.second }.toMap()) {
+//        if (counter >= 19 && value != pValue) break
+//        pValue = value
+//        counter++
+//        lResult += key to value
+//    }
+//    return lResult
+
 
 /**
  * Средняя (14 баллов)
