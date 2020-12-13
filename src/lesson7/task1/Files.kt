@@ -91,12 +91,10 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
     var k = 0
     val map = mutableMapOf<String, Int>()
     for (i in substrings) {
-        File(inputName)
-            .readText()
-            .toLowerCase()
-            .windowed(i.length) {
-                if (i.toLowerCase() == it) k++
-            }
+        File(inputName).readText().toLowerCase().windowed(i.length) {
+            if (i.toLowerCase() == it)
+                k++
+        }
         map[i] = k
     }
     return map
@@ -449,24 +447,24 @@ fun markdownToHtml(inputName: String, outputName: String) {
  * Вывести в выходной файл процесс умножения столбиком числа lhv (> 0) на число rhv (> 0).
  *
  * Пример (для lhv == 19935, rhv == 111):
-     19935
-  *    111
- --------
-    19935
- + 19935
- +19935
- --------
- 2212785
-  * Используемые пробелы, отступы и дефисы должны в точности соответствовать примеру.
-  * Нули в множителе обрабатывать так же, как и остальные цифры:
-    235
-  *  10
-  -----
-      0
-  +235
-  -----
-   2350
-  *
+19935
+ *    111
+--------
+19935
++ 19935
++19935
+--------
+2212785
+ * Используемые пробелы, отступы и дефисы должны в точности соответствовать примеру.
+ * Нули в множителе обрабатывать так же, как и остальные цифры:
+235
+ *  10
+-----
+0
++235
+-----
+2350
+ *
  */
 fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
     TODO()
@@ -479,16 +477,16 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
  * Вывести в выходной файл процесс деления столбиком числа lhv (> 0) на число rhv (> 0).
  *
  * Пример (для lhv == 19935, rhv == 22):
-   19935 | 22
-  -198     906
-  ----
-     13
-     -0
-     --
-     135
-    -132
-    ----
-       3
+19935 | 22
+-198     906
+----
+13
+-0
+--
+135
+-132
+----
+3
 
  * Используемые пробелы, отступы и дефисы должны в точности соответствовать примеру.
  *
