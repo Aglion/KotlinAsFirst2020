@@ -188,7 +188,25 @@ fun alignFileByWidth(inputName: String, outputName: String) {
  * Ключи в ассоциативном массиве должны быть в нижнем регистре.
  *
  */
-fun top20Words(inputName: String): Map<String, Int> = TODO()
+fun top20Words(inputName: String): Map<String, Int> {
+    val text = File(inputName).readText().replace(Regex("[^A-Za-zA-Яа-яЁё]"), " ").toLowerCase()
+    val result = mutableMapOf<String, Int>()
+    var counter = 0
+    var pValue = -1
+    val lResult = mutableMapOf<String, Int>()
+    for (word in text.split(' ')) {
+        if (word !in result.keys) result += word to 1
+        else result[word] = result[word]!!.plus(1)
+    }
+    result.remove("")
+    for ((key, value) in result.toList().sortedByDescending { it.second }.toMap()) {
+        if (counter >= 19 && value != pValue) break
+        pValue = value
+        counter++
+        lResult += key to value
+    }
+    return lResult
+}
 
 /**
  * Средняя (14 баллов)
@@ -425,23 +443,23 @@ fun markdownToHtml(inputName: String, outputName: String) {
  * Вывести в выходной файл процесс умножения столбиком числа lhv (> 0) на число rhv (> 0).
  *
  * Пример (для lhv == 19935, rhv == 111):
-19935
+    19935
  *    111
---------
-19935
-+ 19935
-+19935
---------
-2212785
+ --------
+    19935
+ + 19935
+ +19935
+ --------
+  2212785
  * Используемые пробелы, отступы и дефисы должны в точности соответствовать примеру.
  * Нули в множителе обрабатывать так же, как и остальные цифры:
-235
- *  10
------
-0
-+235
------
-2350
+    235
+  *  10
+ -----
+     0
+ +235
+ -----
+  2350
  *
  */
 fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
@@ -455,21 +473,75 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
  * Вывести в выходной файл процесс деления столбиком числа lhv (> 0) на число rhv (> 0).
  *
  * Пример (для lhv == 19935, rhv == 22):
-19935 | 22
--198     906
-----
-13
--0
---
-135
--132
-----
-3
+   19935 | 22
+  -198     906
+  ----
+    13
+    -0
+    --
+    135
+   -132
+   ----
+      3
 
  * Используемые пробелы, отступы и дефисы должны в точности соответствовать примеру.
  *
  */
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
-    TODO()
+    val writer = File(outputName).bufferedWriter()
+    val result = lhv / rhv
+    val numbers = lhv.toString().split("").filter { it != "" }.toMutableList()
+    var tempNumber = numbers[0].toInt()
+    for ((index) in numbers.withIndex()) {
+        if (tempNumber < rhv && index != lhv.toString().length - 1) {
+            tempNumber = (tempNumber.toString() + numbers[index + 1]).toInt()
+        }
+    }
+    val numbers1 = numbers.drop(tempNumber.toString().length)
+    var tempNumber1 = tempNumber / rhv * rhv
+    if (tempNumber == lhv && tempNumber1 != 0 && tempNumber1.toString().length != lhv.toString().length)
+        writer.write("$lhv | $rhv")
+    else writer.write(" $lhv | $rhv")
+    writer.newLine()
+    writer.write("-$tempNumber1")
+    for (i in 1..result.toString().length + 2) writer.write(" ")
+    writer.write("$result")
+    writer.newLine()
+    for (i in 1..tempNumber1.toString().length + 1) writer.write("-")
+    writer.newLine()
+    var ost = tempNumber - tempNumber1
+    var spaces = tempNumber1.toString().length + 1 - ost.toString().length
+    for (i in 1..spaces) writer.write(" ")
+    writer.write("$ost")
+
+    if (numbers1.isNotEmpty()) {
+        for (number in numbers1) {
+            writer.write(number)
+            writer.newLine()
+            tempNumber = (ost.toString() + number).toInt()
+            tempNumber1 = tempNumber / rhv * rhv
+            val prevOst = ost
+            ost = tempNumber - tempNumber1
+            if ((prevOst.toString() + number).length >= (tempNumber1.toString().length + 1))
+                for (i in 1..spaces + (prevOst.toString() + number).length - (tempNumber1.toString().length + 1)) writer.write(
+                    " "
+                )
+            else for (i in 1 until spaces) writer.write(" ")
+            writer.write("-$tempNumber1")
+            writer.newLine()
+            if ((prevOst.toString() + number).length >= (tempNumber1.toString().length + 1)) {
+                for (i in 1..spaces) writer.write(" ")
+                for (i in 1..(prevOst.toString() + number).length) writer.write("-")
+            } else {
+                for (i in 1 until spaces) writer.write(" ")
+                for (i in 1..tempNumber1.toString().length + 1) writer.write("-")
+            }
+            writer.newLine()
+            spaces += (prevOst.toString() + number).length - ost.toString().length
+            for (i in 1..spaces) writer.write(" ")
+            writer.write("$ost")
+        }
+    }
+    writer.close()
 }
 
