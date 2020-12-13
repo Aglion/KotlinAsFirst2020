@@ -491,7 +491,7 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
  */
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     val writer = File(outputName).bufferedWriter()
-    val answer = lhv / rhv
+    val result = lhv / rhv
     val numbers = lhv.toString().split("").filter { it != "" }.toMutableList()
     var tempNumber = numbers[0].toInt()
     for ((index) in numbers.withIndex()) {
@@ -499,16 +499,15 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
             tempNumber = (tempNumber.toString() + numbers[index + 1]).toInt()
         }
     }
-    val firstLength = tempNumber.toString().length
-    val numbersOdd = numbers.drop(firstLength)
+    val numbers1 = numbers.drop(tempNumber.toString().length)
     var tempNumber1 = tempNumber / rhv * rhv
     if (tempNumber == lhv && tempNumber1 != 0 && tempNumber1.toString().length != lhv.toString().length)
         writer.write("$lhv | $rhv")
     else writer.write(" $lhv | $rhv")
     writer.newLine()
     writer.write("-$tempNumber1")
-    for (i in 1..answer.toString().length + 2) writer.write(" ")
-    writer.write("$answer")
+    for (i in 1..result.toString().length + 2) writer.write(" ")
+    writer.write("$result")
     writer.newLine()
     for (i in 1..tempNumber1.toString().length + 1) writer.write("-")
     writer.newLine()
@@ -517,8 +516,8 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     for (i in 1..spaces) writer.write(" ")
     writer.write("$ost")
 
-    if (numbersOdd.isNotEmpty()) {
-        for (number in numbersOdd) {
+    if (numbers1.isNotEmpty()) {
+        for (number in numbers1) {
             writer.write(number)
             writer.newLine()
             tempNumber = (ost.toString() + number).toInt()
