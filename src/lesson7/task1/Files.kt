@@ -86,13 +86,17 @@ fun deleteMarked(inputName: String, outputName: String) {
  */
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
     val map = mutableMapOf<String, Int>()
-    for (i in substrings) {
-        var k = 0
-        File(inputName).readText().toLowerCase().windowed(i.length) {
-            if (i.toLowerCase() == it)
-                k++
+    for (sub in substrings) {
+        map[sub] = 0
+        for (line in File(inputName).readLines()) {
+            var currentIndex = 0
+            var foundIndex = line.toLowerCase().indexOf(sub.toLowerCase(), currentIndex)
+            while (foundIndex != -1) {
+                map[sub] = map[sub]!! + 1
+                currentIndex = foundIndex + 1
+                foundIndex = line.toLowerCase().indexOf(sub.toLowerCase(), currentIndex)
+            }
         }
-        map[i] = k
     }
     return map
 }
