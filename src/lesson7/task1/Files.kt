@@ -63,20 +63,18 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  * Подчёркивание в середине и/или в конце строк значения не имеет.
  */
 fun deleteMarked(inputName: String, outputName: String) {
-    TODO()
+    val w = File(outputName).bufferedWriter()
+    File(inputName).forEachLine { line ->
+        if (line.isEmpty()) {
+            w.newLine()
+        } else
+            if (!line.startsWith("_")) {
+                w.write(line)
+                w.newLine()
+            }
+    }
+    w.close()
 }
-//    val w = File(outputName).bufferedWriter()
-//    File(inputName).forEachLine { line ->
-//        if (line.isEmpty()) {
-//            w.newLine()
-//        } else
-//            if (!line.startsWith("_")) {
-//                w.write(line)
-//                w.newLine()
-//            }
-//    }
-//    w.close()
-//}
 
 /**
  * Средняя (14 баллов)
@@ -194,23 +192,6 @@ fun alignFileByWidth(inputName: String, outputName: String) {
 fun top20Words(inputName: String): Map<String, Int> {
     TODO()
 }
-//    val text = File(inputName).readText().replace(Regex("[^A-Za-zA-Яа-яЁё]"), " ").toLowerCase()
-//    val result = mutableMapOf<String, Int>()
-//    var counter = 0
-//    var pValue = -1
-//    val lResult = mutableMapOf<String, Int>()
-//    for (word in text.split(' ')) {
-//        if (word !in result.keys) result += word to 1
-//        else result[word] = result[word]!!.plus(1)
-//    }
-//    result.remove("")
-//    for ((key, value) in result.toList().sortedByDescending { it.second }.toMap()) {
-//        if (counter >= 19 && value != pValue) break
-//        pValue = value
-//        counter++
-//        lResult += key to value
-//    }
-//    return lResult
 
 
 /**
@@ -492,92 +473,7 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
  * Используемые пробелы, отступы и дефисы должны в точности соответствовать примеру.
  *
  */
-fun rank(num: Int): Int {
-    var n = num
-    var count = 0
-    if (num == 0)
-        return 1
-    while (n > 0) {
-        n /= 10
-        ++count
-    }
-    return count
-}
 
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
-    File(outputName).bufferedWriter().use {
-        val number = mutableListOf<Int>()
-        var space = 0
-        var dividend = lhv
-        var line = 0
-        var tempNumber: Int
-        while (dividend > 0) {
-            number.add(dividend % 10)
-            dividend /= 10
-        }
-        number.reverse()
-        dividend = number[0]
-        for (i in 0 until number.size) {
-            if (dividend < rhv && line == 0 && lhv >= rhv) {
-                dividend *= 10
-                dividend += number[i + 1]
-                continue
-            }
-            tempNumber = dividend / rhv * rhv
-            if (tempNumber == 0 && line == 0) dividend = lhv
-            if (line == 0) {
-                if (rank(dividend) == rank(tempNumber)) {
-                    ++space
-                    it.write(" ")
-                }
-                it.write("$lhv | $rhv")
-                it.newLine()
-                ++line
-            }
-            if (rank(dividend) > rank(tempNumber)) space += rank(dividend) - rank(tempNumber) - 1
-            if (rank(dividend) == rank(tempNumber)) --space
-            for (j in 1..space) it.write(" ")
-            it.write("-$tempNumber")
-            if (line == 1) {
-                if (rank(dividend) == rank(tempNumber) && tempNumber != 0) {
-                    for (k in 1..rank(lhv) - rank(tempNumber) + 3)
-                        it.write(" ")
-                }
-                if (rank(dividend) > rank(tempNumber) && tempNumber != 0) {
-                    for (k in 1..rank(lhv) - rank(tempNumber) + 2)
-                        it.write(" ")
-                }
-                if (tempNumber == 0) it.write("   ")
-                it.write((lhv / rhv).toString())
-                ++line
-            }
-            it.newLine()
-            if (rank(dividend) > rank(tempNumber)) space -= rank(dividend) - rank(tempNumber) - 1
-            for (j in 1..space) it.write(" ")
-            if (rank(tempNumber) + 1 >= rank(dividend)) {
-                for (j in 0..rank(tempNumber))
-                    it.write("-")
-            } else {
-                for (j in 0 until rank(dividend))
-                    it.write("-")
-            }
-            it.newLine()
-            if (rank(dividend) == rank(tempNumber)) ++space
-            dividend -= tempNumber
-            if (rank(dividend) < rank(tempNumber)) space += rank(tempNumber) - rank(dividend)
-            if (rank(dividend) == rank(tempNumber)) ++space
-            if (rank(dividend) == rank(tempNumber) && rank(tempNumber) == rank(dividend + tempNumber)) --space
-            for (j in 1..space)
-                it.write(" ")
-            it.write("$dividend")
-            if (dividend == lhv) break
-            if (dividend == 0) ++space
-            if (i != number.size - 1) {
-                dividend *= 10
-                dividend += number[i + 1]
-                it.write(number[i + 1].toString())
-            }
-            it.newLine()
-        }
-    }
+    TODO()
 }
