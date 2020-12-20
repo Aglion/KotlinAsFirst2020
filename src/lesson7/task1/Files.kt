@@ -86,7 +86,6 @@ fun deleteMarked(inputName: String, outputName: String) {
  *
  */
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
-
     val map = mutableMapOf<String, Int>()
     for (i in substrings) {
         var k = 0
