@@ -77,31 +77,36 @@ fun main() {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String {
-    val parts = str.split(" ").toMutableList()
-    var result = ""
+    val parts = str.split(" ")
+//    var result = ""
     val map = mapOf(
-        "января" to "01",
-        "февраля" to "02",
-        "марта" to "03",
-        "апреля" to "04",
-        "мая" to "05",
-        "июня" to "06",
-        "июля" to "07",
-        "августа" to "08",
-        "сентября" to "09",
-        "октября" to "10",
-        "ноября" to "11",
-        "декабря" to "12"
+        "января" to 1,
+        "февраля" to 2,
+        "марта" to 3,
+        "апреля" to 4,
+        "мая" to 5,
+        "июня" to 6,
+        "июля" to 7,
+        "августа" to 8,
+        "сентября" to 9,
+        "октября" to 10,
+        "ноября" to 11,
+        "декабря" to 12
     )
-    if (parts.size != 3) return ""
-    val x = map[parts[1]]?.toInt()?.let { daysInMonth(it, parts[2].toInt()) } ?: return ""
-    if (parts[0].length > 2 && parts[0].isEmpty()) return ""
-    if (map[parts[1]] == null) return ""
-    val day = twoDigitStr(parts[0].toInt())
-    if (parts[0].toInt() > x || parts[0].toInt() == 0) return ""
-    if (parts[2].toInt() < 0) return ""
-    else result += day + "." + map[parts[1]] + "." + parts[2]
-    return result
+//    if (parts.size != 3) return ""
+//    val x = map[parts[1]]?.toInt()?.let { daysInMonth(it, parts[2].toInt()) } ?: return ""
+//    if (parts[0].length > 2 && parts[0].isEmpty()) return ""
+//    if (map[parts[1]] == null) return ""
+//    val day = twoDigitStr(parts[0].toInt())
+//    if (parts[0].toInt() > x || parts[0].toInt() == 0) return ""
+//    if (parts[2].toInt() < 0) return ""
+//    else result += day + "." + map[parts[1]] + "." + parts[2]
+//    return result
+    if (parts.size != 3 || parts[1] !in map) return ""
+    val day = parts[0].toIntOrNull() ?: return ""
+    val year = parts[2].toIntOrNull() ?: return ""
+    if (daysInMonth(map[parts[1]] ?: return "", year) < day) return ""
+    return String.format("%02d.%02d.%d", day, map[parts[1]], year)
 }
 
 /**
@@ -201,7 +206,25 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+
+    var k = 0
+    val words = str.toLowerCase().split(" ")
+    for (i in 0 until words.size - 1) {
+        if (words[i] == words[i + 1]) return k
+        else k += words[i].length + 1
+    }
+    return -1
+}
+//    val words = Regex("""[ ]""").split(str)
+//    var res = 0
+//    for (i in 0 until words.size - 1) {
+//        if (words[i].toLowerCase() == list[i + 1].toLowerCase()) return res
+//        else res += words[i].length + 1
+//    }
+//    return -1
+//}
+//
 //    val words = str.toLowerCase().split(" ")
 //
 //    for (i in str.indices) {
