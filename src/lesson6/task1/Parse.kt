@@ -207,7 +207,6 @@ fun plusMinus(expression: String): Int = TODO()
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
 fun firstDuplicateIndex(str: String): Int {
-
     var k = 0
     val words = str.toLowerCase().split(" ")
     for (i in 0 until words.size - 1) {
@@ -216,26 +215,6 @@ fun firstDuplicateIndex(str: String): Int {
     }
     return -1
 }
-//    val words = Regex("""[ ]""").split(str)
-//    var res = 0
-//    for (i in 0 until words.size - 1) {
-//        if (words[i].toLowerCase() == list[i + 1].toLowerCase()) return res
-//        else res += words[i].length + 1
-//    }
-//    return -1
-//}
-//
-//    val words = str.toLowerCase().split(" ")
-//
-//    for (i in str.indices) {
-//        if (words.size > 1) {
-//            if (words[i] == words[i + 1]) {
-//                return str.toLowerCase().indexOf([words[i].toInt()]).toInt()
-//            }
-//        } else return -1
-//    }
-//
-//    return -1
 
 /**
  * Сложная (6 баллов)
@@ -248,7 +227,18 @@ fun firstDuplicateIndex(str: String): Int {
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше нуля либо равны нулю.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val list = description.split("; ")
+    val map = mutableMapOf<String, Double>()
+    for (part in list) {
+        val item = part.split(" ")
+        if (item.size != 2) return ""
+        val price = item[1].toDoubleOrNull()
+        if (price == null || price < 0.0) return ""
+        map[item[0]] = item[1].toDouble()
+    }
+    return map.maxByOrNull { it.value }!!.key
+}
 
 /**
  * Сложная (6 баллов)

@@ -84,22 +84,7 @@ fun deleteMarked(inputName: String, outputName: String) {
  * Регистр букв игнорировать, то есть буквы е и Е считать одинаковыми.
  *
  */
-fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
-    val map = mutableMapOf<String, Int>()
-    for (sub in substrings) {
-        map[sub] = 0
-        for (line in File(inputName).readLines()) {
-            var currentIndex = 0
-            var foundIndex = line.toLowerCase().indexOf(sub.toLowerCase(), currentIndex)
-            while (foundIndex != -1) {
-                map[sub] = map[sub]!! + 1
-                currentIndex = foundIndex + 1
-                foundIndex = line.toLowerCase().indexOf(sub.toLowerCase(), currentIndex)
-            }
-        }
-    }
-    return map
-}
+fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO()
 
 /**
  * Средняя (12 баллов)
@@ -231,7 +216,18 @@ fun top20Words(inputName: String): Map<String, Int> {
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
 fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: String) {
-    TODO()
+    val writer = File(outputName).bufferedWriter()
+    val map = mutableMapOf<Char, String>()
+    for ((key, value) in dictionary) {
+        map[key.toLowerCase()] = value.toLowerCase()
+    }
+    for (char in File(inputName).readText()) {
+        if (map.containsKey(char.toLowerCase())) {
+            if (char.isUpperCase()) writer.write(map[char.toLowerCase()]!!.capitalize())
+            else writer.write(map[char]!!)
+        } else writer.write(char.toString())
+    }
+    writer.close()
 }
 
 /**
